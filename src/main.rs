@@ -20,8 +20,19 @@ fn main() {
 
     let cmd = args()
         .skip(1)
-        .collect::<Vec<String>>()
-        .join(" ");
+        .collect::<Vec<String>>();
 
-    nvim.command(&cmd).unwrap();
+    if let Some(action) = cmd.get(0) {
+        match action.as_ref() {
+            "--remote-send" => {
+                nvim.input(&cmd[1..].join(" ")).unwrap();
+            },
+            "--remote-expr" => {
+                nvim.eval(&cmd[1..].join(" ")).unwrap();
+            },
+            _ => {
+                nvim.input(&cmd.join(" ")).unwrap();
+            },
+        };
+    }
 }

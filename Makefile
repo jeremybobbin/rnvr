@@ -26,7 +26,7 @@ doc:
 	@$(CARGO) doc
 
 install: build
-	@$(CARGO) install
+	@$(CARGO) install --path . --force
 
 publish:
 	@$(CARGO) publish
